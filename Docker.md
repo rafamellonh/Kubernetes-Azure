@@ -15,3 +15,13 @@
 * docker exec (id ou nome)
 * docker start (id)
 * docker stop (id ou nome)
+* docker run --rm -it -p 8011:80 yeasy/simple-web:latest
+
+
+## Tipos de imagens para Containers
+
+* Slin
+* Full
+* Alpine
+
+## Dcokerfile e dockerignore
