@@ -1,4 +1,4 @@
- PODS 
+ # PODS 
 
 * É a menor unidade do kubernetes
 * Nele é executado os containers
@@ -7,4 +7,10 @@
 * Fornecem dependencia, como armazenamento.
 
 
-# DEV
+## Ciclo de vida de um pod
+
+* Pending
+* Running
+* Succeeded
+* Failed
+* Unknown
