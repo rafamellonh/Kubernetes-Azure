@@ -1,0 +1,28 @@
+az login
+
+#parametros
+rg=rg-aks
+local=eastus
+aks=aks-deploy
+sku=Standard_B2s
+
+az group create -n $rg -l $local
+az aks create -g $rg -n $aks --node-count 1 --node-vm-size $sku
+
+# Obter credenciais para usar comandos do KUBECTL
+az aks get-credentials -n $aks -g $rg
+
+# deploy arquivo yaml para replicaset
+kubectl create -f ./replicaset.yaml
+
+# Scale UP
+kubectl scale replicaset app-web --replicas=5
+
+# Scale Down
+kubectl scale replicaset app-web --replicas=2
+
+# Delete replicaset
+kubectl delete replicaset app-web
+
+
+
