@@ -1,0 +1,23 @@
+az login
+
+# Obter as credenciais para poder usar o kubectl
+az aks get-credentials --resource-group rg-aks --name aks-storage
+
+# Criar o segredo para o storage account  (secrets em storage account)
+key=Ehosm4wRSgEozmSQN7P3xDOnupIHv2NnrOTpCz7hENf+4T8e3/Z/4uuVNNQV7LKXDJHXjE3hE0TD+AStlGuDWw==
+
+# Abaixo está criando o secret para o AKS, aqui coloque o nome do seu storge account(--from-literal=azurestorageaccountname=)
+kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=stoaksmello --from-literal=azurestorageaccountkey=Ehosm4wRSgEozmSQN7P3xDOnupIHv2NnrOTpCz7hENf+4T8e3/Z/4uuVNNQV7LKXDJHXjE3hE0TD+AStlGuDWw==
+
+kubectl get secrets
+
+# Criar POD
+
+# Listando os containers
+kubectl get pods -o jsonpath="{.items[*].spec.containers[*].name}"
+
+# Listando Arquivos do FileShare de dentro do container
+kubectl exec pod-files --container pod-files -- sh -c "ls /mnt/azure"
+
+# Criar Arquivo no Container usando Volume CSI
+kubectl exec pod-files --container pod-files -- sh -c "echo \"Criado no Container\" > /mnt/azure/arq-container.txt"
