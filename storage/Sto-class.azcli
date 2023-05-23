@@ -1,0 +1,41 @@
+az login
+
+# variaveis
+storage=stomello0102
+rg=rg-sto
+local=eastus
+fileshare=aksshare
+aks=aks-storage01
+sku=Standard_B2s
+
+# Criar grupo de recursos
+az group create -n $rg -l $local
+
+# Criar conta de armazenamento
+az storage account create -n $storage -g $rg -l $local --sku Standard_LRS
+
+# Obter connection string do STO
+az storage account show-connection-string -n $storage -g $rg -o tsv
+    # ou envie para uma variavel
+connectionstring=$(az storage account show-connection-string -n $storage -g $rg -o tsv)
+
+# Criar File share
+az storage share create -n $fileshare --connection-string $connectionstring
+
+# Obter chave do storage account
+key=$(az storage account keys list -g $rg --account-name $storage --query "[0].value" -o tsv)
+
+# Criar AKS
+az aks create -n $aks -g $rg --node-count 1 --node-vm-size $sku
+
+# Obter credenciais do clustes
+az aks get-credentials -n $aks -g $rg
+
+# Criar segredo com key do Storage account
+kubectl create secret generic azure-secret --from-literal=azurestorageaccountname=$storage --from-literal=azurestorageaccountkey=$key
+
+# Listar secrets
+kubectl get secrets
+
+# Listar storage classes
+kubectl get storageclass

@@ -1,0 +1,1 @@
+# É uma solicitação de armazenamento persistente feita por um pod. O PVC é usado para alocar e reivindicar um recurso de armazenamento persistente em um cluster Kubernetes.
