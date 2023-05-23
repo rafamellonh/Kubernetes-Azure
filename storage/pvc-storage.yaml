@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: azurepvc
+spec:
+  storageClassName: aks-azurefile
+  volumeName: azurefile
+  resources:
+    requests:
+      storage: 5Gi
+  volumeMode: Filesystem    
+  accessModes:
+    - ReadWriteMany
