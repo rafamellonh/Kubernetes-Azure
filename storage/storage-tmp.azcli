@@ -1,0 +1,8 @@
+# listar containers dentro dos pods
+kubectl get pods -o jsonpath="{.items[*].spec.containers[*].name}"
+
+# Criar arquivo dentro do container
+kubectl exec empty-dir --container empty-dir-a -- sh -c "echo \"Criado no Container A\" > /cache/arquivo.txt"
+
+# Acessar o arquivo
+kubectl exec empty-dir --container empty-dir-b -- sh -c "cat /cache/arquivo.txt"
